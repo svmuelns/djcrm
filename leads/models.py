@@ -8,29 +8,23 @@ class User(AbstractUser):
     pass
 
 class Lead(models.Model):
-    #SOURCE_CHOICES = (
-    #    ('YouTube', 'YouTube'), # database value, display value
-    #    ('Google', 'Google'),
-    #    ('Newsletter', 'Newsletter'),
-    #)
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     age = models.IntegerField(default=0)
     agent = models.ForeignKey("Agent", on_delete=models.CASCADE) 
         # we link a table to another table database
         # we link agent variable to agent model
-        # ForeignKeys need 'on_delete' so we know what will hapen if
-        # we delete that Agent
-        # .CASCADE      if the Agent is deleted, delete the lead
-        # .SET_NULL, null=True
-        # .SET_DEFAULT, null=True, default=        
+    
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
 
 class Agent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # don't need these 2, we already have them in AbstractUser
-    # first_name = models.CharField(max_length=20)
-    # last_name = models.CharField(max_length=20)
+    # we already have # first_name = models.CharField(max_length=20) # last_name = models.CharField(max_length=20) in AbstractUser
 
+    def __str__(self):          # this code will output our email
+        return self.user.email  # when we Agent.objects.all()
 
 # =================== NOTES ====================
 
@@ -39,3 +33,19 @@ class Agent(models.Model):
 
     #profile_picture = models.ImageField(blank=True, null=True) # submitting a empty value, no value in database
     #special_files = models.FileField(blank=True, null=True)
+
+
+
+
+    #SOURCE_CHOICES = (
+    #    ('YouTube', 'YouTube'), # database value, display value
+    #    ('Google', 'Google'),
+    #    ('Newsletter', 'Newsletter'),
+    #)
+
+
+        # ForeignKeys need 'on_delete' so we know what will hapen if
+        # we delete that Agent
+        # .CASCADE      if the Agent is deleted, delete the lead
+        # .SET_NULL, null=True
+        # .SET_DEFAULT, null=True, default=  
