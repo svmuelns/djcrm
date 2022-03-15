@@ -1,3 +1,6 @@
-.test{
-    background-color: red;
+.blue{
+    color: #1967d2;
+}
+.inherit{
+    color: inherit;
 }

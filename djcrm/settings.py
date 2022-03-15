@@ -132,3 +132,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'leads.User'
+# =================== EMAIL SEND ===============
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# with other email providers you might use:
+# EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# ================== AUTHENTICATION ===============
+LOGIN_REDIRECT_URL = "/leads"
+LOGOUT_REDIRECT_URL = "/"
