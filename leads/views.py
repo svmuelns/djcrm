@@ -2,6 +2,7 @@
 
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.views import generic                    # from django.views.generic import Template, ListView, DetailView, UpdateView, DeleteView
 from .models import Lead, Agent
@@ -16,7 +17,7 @@ class SignupView(generic.CreateView):
     def get_success_url(self):
         return reverse('login')
 
-def landing_page(request):
+def landing_page(request): # deprecated ones, we will use only class, delete later
     return render(request, "landing.html")
 
 class LandingPageView(generic.TemplateView):    # Class Based Views
@@ -30,7 +31,7 @@ def lead_list(request):
     #return HttpResponse('Hello world')
     return render(request, 'leads/lead_list.html', context)
 
-class LeadListView(generic.ListView):           # class LeadListView(ListView)
+class LeadListView(LoginRequiredMixin, generic.ListView):           # class LeadListView(ListView)
     template_name = 'leads/lead_list.html'
     queryset = Lead.objects.all()
     context_object_name = "leads"
@@ -61,7 +62,7 @@ def lead_create(request):
     }
     return render(request, "leads/lead_create.html", context)
 
-class LeadCreateView(generic.CreateView):
+class LeadCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = 'leads/lead_create.html'
     form_class = LeadModelForm
 

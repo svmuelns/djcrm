@@ -1,11 +1,18 @@
 # We represent data structure of our web page in models.py
-
+# Basically, our database django representation
 from django.db import models
+from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
     pass
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
 
 class Lead(models.Model):
     first_name = models.CharField(max_length=20)
@@ -18,15 +25,49 @@ class Lead(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
-
 class Agent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # we already have # first_name = models.CharField(max_length=20) # last_name = models.CharField(max_length=20) in AbstractUser
+    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE) # will allows us to use multiple users to link to the same organization
 
     def __str__(self):          # this code will output our email
         return self.user.email  # when we Agent.objects.all()
 
+def post_user_created_signal(sender, instance, created, **kwargs):
+    print(instance, created)
+    if created:
+        UserProfile.objects.create(user=instance)
+    pass
+
+post_save.connect(post_user_created_signal, sender=User)
+# once the user is saved, django will send out the post_save signal
+# saying that we want to use that function
+
+
+
+
+
+
+
+
+
+
+
+
 # =================== NOTES ====================
+
+# WHAT ARE MODELS ?????
+
+# A model is the single, definitive source of information 
+# about your data. It contains the essential fields and 
+# behaviors of the data you're storing
+
+# AFTER CREATE MY MODELS, WHAT DO I DO????
+
+# Once you have defined your models, you need to tell Django
+# you’re going to use those models. Do this by editing your 
+# settings file and changing the INSTALLED_APPS setting to 
+# add the name of the module that contains your models.py.
 
     #phoned = models.BooleanField(default=False)
     #source = models.CharField(choices = SOURCE_CHOICES, max_length=100)

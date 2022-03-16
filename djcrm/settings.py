@@ -137,5 +137,6 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 # with other email providers you might use:
 # EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # ================== AUTHENTICATION ===============
-LOGIN_REDIRECT_URL = "/leads"
-LOGOUT_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/leads" # redirect to this if we login
+LOGOUT_REDIRECT_URL = "/" # redirect to this if we logout
+LOGIN_URL = "/login" # redirect to this if we aren't logged to see private stuff
