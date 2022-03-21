@@ -28,7 +28,7 @@ class Lead(models.Model):
 class Agent(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # we already have # first_name = models.CharField(max_length=20) # last_name = models.CharField(max_length=20) in AbstractUser
-    organisation = models.ForeignKey(UserProfile, on_delete=models.CASCADE) # will allows us to use multiple users to link to the same organization
+    organization = models.ForeignKey(UserProfile, on_delete=models.CASCADE) # will allows us to use multiple users to link to the same organization
 
     def __str__(self):          # this code will output our email
         return self.user.email  # when we Agent.objects.all()
@@ -40,8 +40,10 @@ def post_user_created_signal(sender, instance, created, **kwargs):
     pass
 
 post_save.connect(post_user_created_signal, sender=User)
-# once the user is saved, django will send out the post_save signal
-# saying that we want to use that function
+# once we create a user or we save changes in that user,
+# django will send out the post_save signal
+# saying that we want to use that function post_user_created_signal
+# that will save a UserProfile anchored to our Django User
 
 
 

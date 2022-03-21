@@ -2,18 +2,18 @@
 
 {% block content %}
 
-<a href="{% url 'leads:lead-detail' lead.pk %}">Go back to {{ lead.first_name }} {{ lead.last_name }}</a>
+<a href="{% url 'agents:agent-detail' agent.pk %}">Go back to {{ agent.user.username }}</a>
 <hr>
 
 <section class="text-gray-600 body-font overflow-hidden">
     <div class="container px-5 py-24 mx-auto">
         <div class="lg:w-full justify-center mx-auto flex flex-wrap">
             <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-                <h2 class="text-sm title-font text-gray-500 tracking-widest">Client #{{lead.pk}}</h2>
-                <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">{{lead.first_name}} {{lead.last_name}}</h1>
+                <h2 class="text-sm title-font text-gray-500 tracking-widest">Agent #{{agent.pk}}</h2>
+                <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">{{agent.user.username}}</h1>
                 <div class="flex mb-4">
                     <a class="w-full flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
-                        Direction
+                        Update agent info
                     </a>
                 </div>
                 <form method="post">
@@ -24,7 +24,7 @@
                         <button type="submit" class="flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
                             Save
                         </button>
-                        <a href="{% url 'leads:lead-delete' lead.pk %}" class="flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
+                        <a href="{% url 'agents:agent-delete' agent.pk %}" class="flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
                             Delete
                         </a>
                     </div>

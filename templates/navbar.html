@@ -7,10 +7,15 @@
             <span class="ml-3 text-xl">DJCRM</span>
         </a>
         <nav class="gap-x-5 md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <a href="{% url 'leads:lead-list' %}" class="hover:text-gray-900">Leads</a>
-            <a href="{% url 'leads:lead-create' %}" class="hover:text-gray-900">Create lead</a>
             {% if not request.user.is_authenticated %} <!-- if it's not logged in...-->
+                
                 <a href="{% url 'signup' %}" class="hover:text-gray-900">Signup</a>
+            
+            {% else %} <!-- if user it's logged in... -->
+
+                <a href="{% url 'leads:lead-list' %}" class="hover:text-gray-900">Leads</a>
+                <a href="{% url 'agents:agent-list' %}" class="hover:text-gray-900">Agents</a>
+
             {% endif %}
         
             {% if request.user.is_authenticated %}
