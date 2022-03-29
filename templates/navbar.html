@@ -14,7 +14,9 @@
             {% else %} <!-- if user it's logged in... -->
 
                 {% if request.user.is_organizer %} <!-- only organizers will see agents link-->
-                <a href="{% url 'agents:agent-list' %}" class="hover:text-gray-900">Agents</a>
+                    <a href="{% url 'agents:agent-list' %}" class="hover:text-gray-900">Agents</a>
+                    <a href="{% url 'leads:category-list' %}" class="hover:text-gray-900">Categories</a>
+                    
                 {% endif %}
 
                 <a href="{% url 'leads:lead-list' %}" class="hover:text-gray-900">Leads</a>

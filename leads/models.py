@@ -20,7 +20,8 @@ class Lead(models.Model):
     last_name = models.CharField(max_length=20)
     age = models.IntegerField(default=0)
     organization = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    agent = models.ForeignKey("Agent", on_delete=models.CASCADE) 
+    agent = models.ForeignKey("Agent", on_delete=models.CASCADE)
+    category = models.ForeignKey("Category", null=True, blank=True, on_delete=models.SET_NULL) # we link every lead to a category
         # we link a table to another table database
         # we link agent variable to agent model
     
@@ -33,13 +34,23 @@ class Agent(models.Model):
     organization = models.ForeignKey(UserProfile, on_delete=models.CASCADE) # will allows us to use multiple users to link to the same organization
 
     def __str__(self):          # this code will output our email
-        return self.user.email  # when we Agent.objects.all()
+        return self.user.username  # when we Agent.objects.all()
+        # return self.user.email
+
+class Category(models.Model): # New, Contacted, Converted, Unconverted
+    name = models.CharField(max_length=30)
+    organization = models.ForeignKey(UserProfile, on_delete=models.CASCADE) # will allows us to use multiple users to link to the same organization
+
+    
+    def __str__(self): # returns name when called function
+        return self.name
+
+
 
 def post_user_created_signal(sender, instance, created, **kwargs):
     print(instance, created)
     if created:
         UserProfile.objects.create(user=instance)
-    pass
 
 post_save.connect(post_user_created_signal, sender=User)
 # once we create a user or we save changes in that user,
