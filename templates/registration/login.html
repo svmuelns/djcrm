@@ -1,13 +1,20 @@
 {% extends "base.html" %}
+{% load tailwind_filters %}
 
 {% block content %}
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-    <hr>
-    <a href="{% url 'reset-password' %}">Forgot password?</a>
-</form>
+<div class="max-w-lg mx-auto mt-10">
+    <div class="max-w-lg mb-10">
+        <a href="{% url 'reset-password' %}" class="text-gray-700 hover:text-blue-500 mt-3">Don't have an account?</a>
+        <hr>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="w-full text-white bg-blue-500 hover:bg-blue-600 px-3 py-2 rounded-md">Login</button>
+    </form>
+    <a href="{% url 'reset-password' %}" class="text-gray-700 hover:text-blue-500 mt-3">Forgot password?</a>
+</div>
 
 {% endblock content %}

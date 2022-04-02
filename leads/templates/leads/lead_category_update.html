@@ -6,8 +6,7 @@
 <section class="text-gray-600 body-font overflow-hidden">
     <div class="container px-5 py-5 mx-auto">
         <div class="lg:w-full justify-center mx-auto flex flex-wrap">
-            <div class="lg:w-full w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-
+            <div class="lg:w-full w-full lg:px-10 lg:py-6 mb-6 lg:mb-0">
                 <h2 class="text-sm title-font text-gray-500 tracking-widest">Client #{{lead.pk}}</h2>
                 <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">{{lead.first_name}} {{lead.last_name}}</h1>
                 <div class="mb-10">
@@ -16,17 +15,17 @@
                         Back to leads
                     </a>
                 </div>
-                
                 <div class="flex mb-4">
                     <a href="{% url 'leads:lead-detail' lead.pk %}" class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
                         Overview
                     </a>
-                    <a href="{% url 'leads:lead-update' lead.pk %}" class="flex-grow border-b-2 border-blue-500 py-2 text-lg px-1">
+                    <a href="{% url 'leads:lead-update' lead.pk %}" class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
                         Update
                     </a>
-                    <a href="{% url 'leads:lead-category-update' lead.pk %}" class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
+                    <a href="{% url 'leads:lead-category-update' lead.pk %}" class="flex-grow border-b-2 border-blue-500 py-2 text-lg px-1">
                         Category
                     </a>
+
                 </div>
                 <form method="post">
                     {% csrf_token %}
@@ -36,9 +35,6 @@
                         <button type="submit" class="flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded">
                             Save
                         </button>
-                        <a href="{% url 'leads:lead-delete' lead.pk %}" class="flex text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
-                            Delete
-                        </a>
                     </div>
                 </form>
             </div>

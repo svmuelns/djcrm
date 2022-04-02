@@ -1,24 +1,31 @@
 {% extends "base.html" %}
+{% load tailwind_filters %}
 
 {% block content %}
 
-<a href="{% url 'agents:agent-detail' agent.pk %}">Go back to {{ agent.user.username }}</a>
-<hr>
-
 <section class="text-gray-600 body-font overflow-hidden">
-    <div class="container px-5 py-24 mx-auto">
+    <div class="container px-5 py-5 mx-auto">
         <div class="lg:w-full justify-center mx-auto flex flex-wrap">
-            <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-                <h2 class="text-sm title-font text-gray-500 tracking-widest">Agent #{{agent.pk}}</h2>
-                <h1 class="text-gray-900 text-3xl title-font font-medium mb-4">{{agent.user.username}}</h1>
-                <div class="flex mb-4">
-                    <a class="w-full flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
-                        Update agent info
+            <div class="lg:w-full w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+
+                <h2 class="text-sm title-font text-gray-500 tracking-widest">Client #{{agent.pk}}</h2>
+                <h1 class="text-gray-900 text-3xl title-font font-medium">{{agent.user.username}}</h1>
+                <div class="mb-10">
+                    <hr>
+                    <a href="{% url 'agents:agent-list' %}" class="hover:text-blue-500 text-gray-700">
+                        Back to agents
+                    </a>
+                </div>                <div class="flex mb-4">
+                    <a href="{% url 'agents:agent-detail' agent.pk %}" class="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
+                        Overview
+                    </a>
+                    <a href="{% url 'agents:agent-update' agent.pk %}" class="flex-grow border-b-2 border-blue-500 py-2 text-lg px-1">
+                        Update
                     </a>
                 </div>
                 <form method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    {{ form|crispy }}
                 
                     <div class="flex justify-end gap-x-5">
                         <button type="submit" class="flex text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">

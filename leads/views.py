@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.views import generic                    # from django.views.generic import Template, ListView, DetailView, UpdateView, DeleteView
 from .models import Lead, Agent, Category
-from .forms import LeadForm, LeadModelForm, CustomUserCreationForm, AssignAgentForm
+from .forms import LeadForm, LeadModelForm, CustomUserCreationForm, LeadCategoryUpdateForm #AssignAgentForm
 
 # CRUD+L - Create, Retrieve, Update and Delete + List
 
@@ -178,8 +178,6 @@ class CategoryListView(LoginRequiredMixin, generic.ListView):
         if user.is_agent:
             queryset = Lead.objects.filter(organization=user.agent.organization)
         
-        
-        
         context.update({
             "unassigned_lead_count": queryset.filter(category__isnull=True).count()
         })
@@ -196,11 +194,42 @@ class CategoryListView(LoginRequiredMixin, generic.ListView):
         
         return queryset
 
+class CategoryDetailView(LoginRequiredMixin, generic.DetailView):
+    template_name = "leads/category_detail.html"
+    context_object_name = "category"
 
+    def get_queryset(self):
+        user = self.request.user
 
+        if user.is_organizer:
+            queryset = Category.objects.filter(organization=user.userprofile)
 
+        if user.is_agent:
+            queryset = Category.objects.filter(organization=user.agent.organization)
+        
+        return queryset
 
+class LeadCategoryUpdateView(LoginRequiredMixin, generic.UpdateView):
 
+    template_name = 'leads/lead_category_update.html'
+    form_class = LeadCategoryUpdateForm
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.is_organizer:
+            queryset = Lead.objects.filter(organization=user.userprofile)
+
+        if user.is_agent:
+            queryset = Lead.objects.filter(organization=user.agent.organization)
+            queryset = queryset.filter(agent__user=user)
+
+        return queryset
+
+    def get_success_url(self):
+        return reverse("leads:lead-detail", kwargs={"pk":self.get_object().id})
+        # will redirect like if we typed lead.pk
+        #kwargs dictionary of arguments
 
 
 

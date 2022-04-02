@@ -1,5 +1,6 @@
 # We represent data structure of our web page in models.py
 # Basically, our database django representation
+# Most of the changes here will need a makemigrate, migrate
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import AbstractUser
@@ -21,7 +22,7 @@ class Lead(models.Model):
     age = models.IntegerField(default=0)
     organization = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     agent = models.ForeignKey("Agent", on_delete=models.CASCADE)
-    category = models.ForeignKey("Category", null=True, blank=True, on_delete=models.SET_NULL) # we link every lead to a category
+    category = models.ForeignKey("Category", related_name="leads", null=True, blank=True, on_delete=models.SET_NULL) # we link every lead to a category
         # we link a table to another table database
         # we link agent variable to agent model
     

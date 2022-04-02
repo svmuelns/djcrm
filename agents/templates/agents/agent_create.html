@@ -1,17 +1,27 @@
 {% extends "base.html" %}
+{% load tailwind_filters %}
 
 {% block content %}
 
-    <a href="{% url 'agents:agent-list' %}">Go back to agents</a>
-    <hr>
-    <h1>Create a new agent</h1>
+<div class="max-w-lg mx-auto my-5 px-5">
+    <div class="mb-10">
+        <h1 class="text-4xl text-gray-800">
+            Create a new agent
+        </h1>
+        <hr>
+        <a href="{% url 'agents:agent-list' %}" class="hover:text-blue-500 text-gray-700">
+            Back to agents
+        </a>
+    </div>
     <form method="post"> <!-- "post" to create/update. "get" to fetching, searching-->
         <!-- action="" is the url you want to submit this data to -->
         <!-- action="." to submit data to the url you're currently on-->
         <!-- action="/leads/another-url/" you need to have this path in your urls.py-->
         {% csrf_token %} <!-- hides important info-->
-        {{ form.as_p }} <!-- as paragraph --> 
-        <button type="submit">Submit</button>
+        {{ form|crispy }} <!-- as paragraph --> 
+        <button type="submit" class="w-full text-white bg-blue-500 hover:bg-blue-600 px-3 py-2 rounded-md">
+            Create
+        </button>
     </form>
-
+</div>
 {% endblock content %}
