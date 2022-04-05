@@ -23,9 +23,14 @@ class Lead(models.Model):
     organization = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     agent = models.ForeignKey("Agent", on_delete=models.CASCADE)
     category = models.ForeignKey("Category", related_name="leads", null=True, blank=True, on_delete=models.SET_NULL) # we link every lead to a category
+    description = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    phone_number = models.CharField(max_length=20)
+    email = models.EmailField()
         # we link a table to another table database
         # we link agent variable to agent model
     
+
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 

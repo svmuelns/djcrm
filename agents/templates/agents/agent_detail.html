@@ -7,10 +7,18 @@
         <div class="lg:w-full justify-center mx-auto flex flex-wrap">
             <div class="lg:w-full w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
                 <h2 class="text-sm title-font text-gray-500 tracking-widest">
-                    Agent #{{agent.pk}}
+                    {% if agent.user.is_organizer %}
+                        Organization
+                    {% else %}
+                        Agent #{{agent.pk}}
+                    {% endif %}
                 </h2>
                 <h1 class="text-gray-900 text-3xl title-font font-medium">
-                    {{agent.user.username}}
+                    {% if agent.user.is_organizer %}
+                        {{agent.user.username}}
+                    {% else %}
+                        {{agent.user.first_name}} {{agent.user.last_name}}
+                    {% endif %}
                 </h1>
                 <div class="mb-10">
                     <hr>
@@ -26,13 +34,24 @@
                         Update
                     </a>
                 </div>
-                <p class="leading-relaxed mb-4">Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY.</p>                <div class="flex border-t border-gray-200 py-2">
+                <p class="leading-relaxed mb-4">Fam locavore kickstarter distillery. Mixtape chillwave tumeric sriracha taximy chia microdosing tilde DIY.</p>
+                <div class="flex border-t border-gray-200 py-2">
+                    <span class="text-gray-500">Username</span>
+                    <span class="ml-auto text-gray-900">{{agent.user.username}}</span>
+                </div>
+                <div class="flex border-t border-gray-200 py-2">
                     <span class="text-gray-500">Email</span>
-                    <span class="ml-auto text-gray-900">Dummy email</span>
+                    <span class="ml-auto text-gray-900">{{agent.user.email}}</span>
                 </div>
                 <div class="flex border-t border-gray-200 py-2">
                     <span class="text-gray-500">Occupation</span>
-                    <span class="ml-auto text-gray-900">Dummy occupation</span>
+                    <span class="ml-auto text-gray-900">
+                        {% if agent.user.is_organizer %}
+                            Organization
+                        {% else %}
+                            Agent
+                        {% endif %}
+                    </span>
                 </div>
                 <div class="flex border-t border-b mb-6 border-gray-200 py-2">
                     <span class="text-gray-500">Cell phone</span>

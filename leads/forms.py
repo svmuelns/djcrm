@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UsernameField
-from .models import Lead, User #Agent
+from .models import Agent, Lead, User #Agent
 
 User = get_user_model()
 
@@ -13,9 +13,31 @@ class LeadModelForm(forms.ModelForm):
             'first_name',
             'last_name',
             'age',
-            'agent',
-            'organization'
+            #'agent',
+            'description',
+            'phone_number',
+            'email'
         )
+
+class LeadModelOrganizerForm(forms.ModelForm):
+    class Meta: # where we specify inf about form
+        model = Lead
+        fields = (
+            'first_name',
+            'last_name',
+            'age',
+            'agent',
+            'description',
+            'phone_number',
+            'email'
+        )
+    def __init__(self, *args, **kwargs):
+        
+        self.request = kwargs.pop('request')
+        super(LeadModelOrganizerForm, self).__init__(*args, **kwargs)
+
+        self.fields['agent'].queryset = Agent.objects.filter(organization_id=self.request.user.userprofile)
+
 
 class LeadForm(forms.Form):
     first_name = forms.CharField()
