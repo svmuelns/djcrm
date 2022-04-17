@@ -181,4 +181,6 @@ if not DEBUG:
     X_FRAME_OPTIONS = "DENY"
 
     ALLOWED_HOSTS = ["*"]
-    
+
+import django_on_heroku
+django_on_heroku.settings(locals())
