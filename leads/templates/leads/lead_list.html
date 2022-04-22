@@ -15,7 +15,7 @@
                 <a class="text-gray-500 hover:text-blue-500" href="{% url 'leads:lead-create-org' %}">
                     Create a new lead
                 </a>
-                {% elif not request.user.is_organizer %}
+                {% elif request.user.is_agent %}
                 <a class="text-gray-500 hover:text-blue-500" href="{% url 'leads:lead-create' %}">
                     Create a new lead
                 </a>
@@ -46,6 +46,9 @@
                             Cell Phone Number
                             </th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Agent
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Category
                             </th>
                             <th scope="col" class="relative px-6 py-3">
@@ -54,7 +57,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for lead in leads %}
+                        {% for lead in leads reversed %}
                             <tr class="bg-white">
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ lead.date_added }}
@@ -72,6 +75,9 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                     {{ lead.phone_number }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ lead.agent }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     {% if lead.category %}

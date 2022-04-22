@@ -7,7 +7,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class User(AbstractUser):
-    is_organizer = models.BooleanField(default=True)
+    is_organizer = models.BooleanField(default=False)
     is_agent = models.BooleanField(default=False)
 
 class UserProfile(models.Model):
@@ -57,6 +57,7 @@ def post_user_created_signal(sender, instance, created, **kwargs):
     print(instance, created)
     if created:
         UserProfile.objects.create(user=instance)
+    # prints *username* *true or false* if created
 
 post_save.connect(post_user_created_signal, sender=User)
 # once we create a user or we save changes in that user,

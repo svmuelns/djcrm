@@ -241,9 +241,10 @@ class CategoryListView(LoginRequiredMixin, generic.ListView):
         
         context.update({
             "unassigned_lead_count": queryset.filter(category__isnull=True).count(),
-            "contacted_lead_count": queryset.filter(category=1).count(),
-            "converted_lead_count": queryset.filter(category=2).count(),
-            "unconverted_lead_count": queryset.filter(category=3).count()
+            # "contacted_lead_count": queryset.filter(category=1).count(),
+            # "converted_lead_count": queryset.filter(category=2).count(),
+            # "declined_lead_count": queryset.filter(category=3).count(),
+            # "excluded_lead_count": queryset.filter(category=4).count()
         })
         return context
 
